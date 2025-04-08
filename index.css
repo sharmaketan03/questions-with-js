@@ -4,27 +4,100 @@
     box-sizing: border-box;
 
 }
-    .start{
-        width:100%;
-        height:100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-    }
-#start{
-      padding:10px 30px;
+.visible{
+    display:flex;
+}
+.hide {
+    display: none;
+}
+#inputsearch{
+    padding:0.5rem  30px
+}
+#startquiz{
+    padding:0.5rem;
+    color:white;
+    background-color: blueviolet;
+    font-weight: bold;
+    border-radius: 4px;
+    box-shadow: 5px 5px 5px 5px blueviolet;
+    border: none;
 
 }
-.value{
-      width:300px;
-      background-color:aqua;
-      padding:1rem;
-      text-align:center;
-      display:none;
+.headpara{
+    font-size:25px;
 }
-.btn{
-    /* width:300px; */
-    padding:0.5rem 40px;
-    margin:10px;
+.options{
+    display: flex;
+    width:250px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items:Center;
+    margin:1rem auto;
+
+}
+.screen2{
+    width:350px;
+    text-align: center;
+    border:1px solid black;
+    padding:2rem;
+    background-color: rgb(240, 240, 231);
+    margin:auto;
+    position: relative;
+}
+.screen2 .time{
+  position: absolute;
+  right:20px;
+  top:10px;
+  background-color:rgb(16, 15, 14);
+  color:#fff;
+  width:30px;
+  height:30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.option{
+    width:100px;
+    margin:0.5rem 0;
+    border:none;
+    padding:0.3rem;
+    background-color: blueviolet;
+    color:white;
+    border-radius:8px;
+    transition:all 0.4s linear;
+}
+.option:hover{
+    background-color:white;
+    color:black;
+}
+.screen3{
+    /* display: none; */
+}
+.wrapper{
+    width:100%;
+    height:100vh;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    background-color: antiquewhite;
+}
+.screen1{
+    padding:10px 20px;
+}
+/* .screen3{
+    width:100%;
+    height:100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+} */
+.screen3 h2{
+    font-size:30px;
+}
+
+.screen3 {
+    font-size:40px;
+    color:white;
 }
