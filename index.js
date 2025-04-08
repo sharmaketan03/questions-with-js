@@ -69,9 +69,9 @@ startbutton.addEventListener("click", (e) => {
       if (timer === 0) {
         if (arrindexnumber >= arr.length-1) {
           clearInterval(interval);
+          obj1.score=score
           screen2.classList.add("hide");
           screen3.classList.remove("hide");
-          
           
           mainscore.innerText = score;
           arrindexnumber = 0;

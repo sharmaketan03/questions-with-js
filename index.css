@@ -71,6 +71,12 @@
     background-color:white;
     color:black;
 }
+#nextquestion{
+    padding:0.5rem 40px;
+    background-color:blueviolet;
+    color:white;
+    border-radius:10px;
+}
 .screen3{
     /* display: none; */
 }
