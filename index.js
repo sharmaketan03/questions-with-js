@@ -29,7 +29,8 @@ let objlength;
 let score = 0;
 let questionnumber = 0;
 let timer = 5;
-let localarr = JSON.parse(localStorage.getItem("localarr"))?JSON.parse(localStorage.getItem("localarr")):[];
+let useranswer;
+let localarr = [];
 let obj = {};
 const startquiz = document.querySelector("#startquiz");
 let screen1 = document.querySelector(".screen1");
@@ -85,6 +86,7 @@ startquiz.addEventListener("click", (e) => {
           }, 2000);
         } else {
           timer = 5;
+         
           time.innerHTML = timer;
           questionnumber++;
           showquestionnumber();
@@ -100,7 +102,10 @@ startquiz.addEventListener("click", (e) => {
 
 for (let i = 0; i < option.length; i++) {
   option[i].addEventListener("click", (e) => {
-    let useranswer = e.target.innerHTML;
+
+    
+    //
+     useranswer = e.target.innerHTML;
     // console.log(typeof useranswer)
     option[i].style.disabled="true"
 
@@ -124,6 +129,11 @@ function showquestionnumber() {
   }
 }
 nextquestion.addEventListener("click", () => {
+
+  if (questionnumber >= questions.length - 1) {
+    screen3.classList.remove("hide");
+    screen2.classList.add("hide");
+  }
   timer = 5;
   time.innerHTML = timer;
   questionnumber++;
@@ -208,5 +218,6 @@ logo.addEventListener("click",()=>{
         screen1.classList.remove("hide")
         screen2.classList.add("hide")
         screen3.classList.add("hide")
+        maindivboard.classList.add("hide")
         input.value=""
 })
