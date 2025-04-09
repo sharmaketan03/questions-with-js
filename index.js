@@ -1,147 +1,190 @@
-const arr = [
+const questions = [
   {
     question: "2+2",
-    a: 4,
-    option: [2, 4, 6, 8],
+    answer: 4,
+    options: [1, 2, 3, 4],
   },
   {
     question: "2+2+2",
-    a: 6,
-    option: [10, 12, 6, 1],
+    answer: 6,
+    options: [2, 4, 6, 8],
   },
   {
-    question: "2+2+2*2",
-    a: 8,
-    option: [2, 4, 6, 8],
+    question: "2+2+2-2",
+    answer: 4,
+    options: [4, 6, 0, 2],
+  },
+  {
+    question: "What is the capital of China?",
+    answer: "Beijing",
+    options: ["New Delhi", "Beijing", "Kathmandu", "Islamabad"],
+  },
+  {
+    question: "Which of the following is NOT a neighbour of India?",
+    answer: "Australia",
+    options: ["Pakistan", "China", "Australia", "Bhutan"],
   },
 ];
-let arrindexnumber = 0;
-let timer = 5;
-let useranswer = 0;
+let objlength;
 let score = 0;
+let questionnumber = 0;
+let timer = 5;
+let localarr = [];
+let obj = {};
+const startquiz = document.querySelector("#startquiz");
+let screen1 = document.querySelector(".screen1");
+let screen2 = document.querySelector(".screen2");
+let screen3 = document.querySelector(".screen3");
+let questionpara = document.querySelector(".headpara");
+let option = document.querySelectorAll(".option");
+let time = document.querySelector(".time");
+let scores = document.querySelector(".screen3 p span");
+let input = document.querySelector("#inputsearch");
+let nextquestion = document.querySelector("#nextquestion");
 
-//IF LS HAS SOME DATA, INITIALIZE storage WITH THAT, IF NOT, THEN INITIALIZE storage AS BLANK ARRAY
-let storage =
-  localStorage.getItem("storage") !== null
-    ? JSON.parse(localStorage.getItem("storage"))
-    : [];
+// console.log(option);
 
-let obj1 = {};
-let value;
-const input = document.querySelector("input");
-const startbutton = document.querySelector("#startquiz");
-const screen1 = document.querySelector(".screen1");
-const screen2 = document.querySelector(".screen2");
-const screen3 = document.querySelector(".screen3");
-const questionpara = document.querySelector(".headpara");
-const options = document.querySelectorAll(".option");
-let timechange = document.querySelector(".time");
-let mainscore = document.querySelector(".screen3 p span");
-let parentdiv = document.querySelector(".wrapper");
-let nextquestion=document.querySelector("#nextquestion")
-console.log(nextquestion)
-// console.log(mainscore);
-
-startbutton.addEventListener("click", (e) => {
+startquiz.addEventListener("click", (e) => {
   e.preventDefault();
-  // console.log(typeof input.value)
-  if (input.value != "") {
-    value = input.value;
-    // console.log(value)
 
+  if (input.value != "") {
+    // console.log(input.value)
+    obj = {
+      name: input.value,
+      date: new Date().toLocaleString(),
+      score: 0,
+    };
+    objlength = Object.keys(obj).length;
+
+    localarr.push(obj);
+    localStorage.setItem("localarr", JSON.stringify(localarr));
     screen1.classList.add("hide");
     screen2.classList.remove("hide");
 
-    //PUTTING NAME, DATE, SCORE=0 IN LOCALSTORAGE
-    obj1 = {
-      Name: value,
-      Date: new Date(),
-      score: 0,
-    };
+    showquestionnumber();
 
-    storage.push(obj1);
-    localStorage.setItem("storage", JSON.stringify(storage));
-    console.log(storage);
-
-    showquestionwithanser();
-
-    interval = setInterval(() => {
-      if (timer === 0) {
-        if (arrindexnumber >= arr.length-1) {
+    let interval = setInterval(() => {
+      if (timer == 0) {
+        if (questionnumber >= questions.length - 1) {
           clearInterval(interval);
-          obj1.score=score
-          screen2.classList.add("hide");
           screen3.classList.remove("hide");
-          
-          mainscore.innerText = score;
-          arrindexnumber = 0;
-          timer=5
+          screen2.classList.add("hide");
+          obj.score = score;
+          localStorage.setItem("localarr", JSON.stringify(localarr));
+          scores.innerHTML = score;
+
+          questionnumber = 0;
+        
           setTimeout(() => {
-            screen1.classList.remove("hide");
             screen3.classList.add("hide");
+            screen1.classList.remove("hide");
 
-
+            input.value = " ";
             score=0
-           
-          }, 5000);
-         
+            timer=5
+          }, 2000);
         } else {
-          console.log("hello")
           timer = 5;
-          arrindexnumber++;
-          timechange.innerHTML = timer;
-          showquestionwithanser();
+          time.innerHTML = timer;
+          questionnumber++;
+          showquestionnumber();
         }
       } else {
-        // console.log(timer)
-        timechange.innerHTML = timer--;
+        time.innerHTML = timer--;
       }
-
-      // localstorage.setItem()
     }, 1000);
   } else {
-    startbutton.disabled = "";
-    // input.addEventListener("click",()=>{
-    //      startbutton.disabled="false"
-    // })
+    startquiz.style.disabled = "";
   }
 });
 
-function showquestionwithanser() {
-  console.log(arr[arrindexnumber].question)
-  questionpara.innerText = arr[arrindexnumber].question
+for (let i = 0; i < option.length; i++) {
+  option[i].addEventListener("click", (e) => {
+    let useranswer = e.target.innerHTML;
+    // console.log(typeof useranswer)
 
-  for (let i = 0; i < options.length; i++) {
-    options[i].innerText = arr[arrindexnumber].option[i];
-  }
-}
-
-for (let i = 0; i < options.length; i++) {
-  options[i].addEventListener("click", (e) => {
-    // console.log(e.target.innerHTML);
-    useranswer = e.target.innerText;
-
-    if (parseInt(useranswer) === arr[arrindexnumber].a) {
+    if (typeof questions[questionnumber].answer === "number") {
+      useranswer = Number(useranswer);
+    }
+    if (questions[questionnumber].answer === useranswer) {
+      4;
+      // console.log("answer sahi h");
       score++;
-      // console.log(mainscore);
     }
   });
 }
 
-function prscore(score) {
-  // console.log()
-  let arr = JSON.parse(localStorage.getItem("storage"));
-  arr[arr.length - 1].score = score;
-  console.log(arr);
-  localStorage.setItem("storage", JSON.stringify(arr));
+function showquestionnumber() {
+  questionpara.innerHTML = questions[questionnumber].question;
+  for (let i = 0; i < questions.length - 1; i++) {
+    // console.log(questions[questionnumber].options[i])
+    option[i].innerHTML = questions[questionnumber].options[i];
+  }
 }
-
-
-nextquestion.addEventListener("click",()=>{
+nextquestion.addEventListener("click", () => {
   timer = 5;
-  arrindexnumber++;
-  timechange.innerHTML = timer;
-  showquestionwithanser();
-})
-// input.value=""
-// screen3.innerHTML=""
+  time.innerHTML = timer;
+  questionnumber++;
+  showquestionnumber();
+});
+
+let leaderboard = document.querySelector("#leaderboard");
+let maindivboard = document.querySelector(".lead");
+leaderboard.addEventListener("click", () => {
+  screen1.classList.add("hide");
+  screen2.classList.add("hide");
+  screen3.classList.add("hide");
+  maindivboard.style .display ="block"
+  screen1.style .display="none"
+  let getData = JSON.parse(localStorage.getItem("localarr"));
+
+  let table = document.createElement("table");
+  table.classList.add("table")
+  let maindiv = document.querySelector(".lead");
+  let thead=document.createElement("thead")
+  thead.classList.add("thead")
+  let tr = document.createElement("tr");
+  // tr.classList.add("tr")
+
+  let th1=document.createElement("th")
+  let th2=document.createElement("th")
+  let th3=document.createElement("th")
+  th1.classList.add("th")
+  th2.classList.add("th")
+  th3.classList.add("th")
+
+  th1.innerHTML="Name"
+  th2.innerHTML="Date"
+  th3.innerHTML="Score"
+  tr.append(th1,th2,th3)
+  thead.append(tr)
+  table.append(thead)
+
+  let td1;
+  let td2;
+  let td3;
+
+  for (let i = 0; i < getData.length; i++) {
+    let tbody=document.createElement("tbody")
+    tbody.classList.add("tbody")
+    let tr = document.createElement("tr");
+    for (j = 0; j <= i; j++) {
+      td1 = document.createElement("td");
+      td2 = document.createElement("td");
+      td3 = document.createElement("td");
+
+      td1.innerHTML = getData[i].name;
+      td2.innerHTML = getData[i].date;
+      td3.innerHTML = getData[i].score;
+    }
+    td1.classList.add("td")
+    td2.classList.add("td")
+   td3.classList.add("td")
+
+    tr.append(td1, td2, td3);
+    tbody.append(tr)
+    table.append(tbody);
+  }
+
+  maindiv.append(table);
+});
