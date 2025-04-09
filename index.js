@@ -29,7 +29,7 @@ let objlength;
 let score = 0;
 let questionnumber = 0;
 let timer = 5;
-let localarr = [];
+let localarr = JSON.parse(localStorage.getItem("localarr"))?JSON.parse(localStorage.getItem("localarr")):[];
 let obj = {};
 const startquiz = document.querySelector("#startquiz");
 let screen1 = document.querySelector(".screen1");
@@ -74,14 +74,14 @@ startquiz.addEventListener("click", (e) => {
           scores.innerHTML = score;
 
           questionnumber = 0;
-        
+
           setTimeout(() => {
             screen3.classList.add("hide");
             screen1.classList.remove("hide");
 
             input.value = " ";
-            score=0
-            timer=5
+            score = 0;
+            timer = 5;
           }, 2000);
         } else {
           timer = 5;
@@ -102,6 +102,7 @@ for (let i = 0; i < option.length; i++) {
   option[i].addEventListener("click", (e) => {
     let useranswer = e.target.innerHTML;
     // console.log(typeof useranswer)
+    option[i].style.disabled="true"
 
     if (typeof questions[questionnumber].answer === "number") {
       useranswer = Number(useranswer);
@@ -115,6 +116,7 @@ for (let i = 0; i < option.length; i++) {
 }
 
 function showquestionnumber() {
+  maindivboard.innerHTML = "";
   questionpara.innerHTML = questions[questionnumber].question;
   for (let i = 0; i < questions.length - 1; i++) {
     // console.log(questions[questionnumber].options[i])
@@ -130,61 +132,81 @@ nextquestion.addEventListener("click", () => {
 
 let leaderboard = document.querySelector("#leaderboard");
 let maindivboard = document.querySelector(".lead");
+
+
 leaderboard.addEventListener("click", () => {
-  screen1.classList.add("hide");
-  screen2.classList.add("hide");
-  screen3.classList.add("hide");
-  maindivboard.style .display ="block"
-  screen1.style .display="none"
-  let getData = JSON.parse(localStorage.getItem("localarr"));
 
-  let table = document.createElement("table");
-  table.classList.add("table")
-  let maindiv = document.querySelector(".lead");
-  let thead=document.createElement("thead")
-  thead.classList.add("thead")
-  let tr = document.createElement("tr");
-  // tr.classList.add("tr")
-
-  let th1=document.createElement("th")
-  let th2=document.createElement("th")
-  let th3=document.createElement("th")
-  th1.classList.add("th")
-  th2.classList.add("th")
-  th3.classList.add("th")
-
-  th1.innerHTML="Name"
-  th2.innerHTML="Date"
-  th3.innerHTML="Score"
-  tr.append(th1,th2,th3)
-  thead.append(tr)
-  table.append(thead)
-
-  let td1;
-  let td2;
-  let td3;
-
-  for (let i = 0; i < getData.length; i++) {
-    let tbody=document.createElement("tbody")
-    tbody.classList.add("tbody")
+  if(input.value!=""){
+    maindivboard.innerHTML=""
+    screen1.classList.add("hide");
+    screen2.classList.add("hide");
+    screen3.classList.add("hide");
+    maindivboard.style.display = "block";
+    screen1.style.display = "none";
+    let getData = JSON.parse(localStorage.getItem("localarr"));
+    getData.sort(function (a, b) {
+      return b.score - a.score;
+    });
+    let table = document.createElement("table");
+    table.classList.add("table");
+    let maindiv = document.querySelector(".lead");
+    let thead = document.createElement("thead");
+    thead.classList.add("thead");
     let tr = document.createElement("tr");
-    for (j = 0; j <= i; j++) {
-      td1 = document.createElement("td");
-      td2 = document.createElement("td");
-      td3 = document.createElement("td");
-
-      td1.innerHTML = getData[i].name;
-      td2.innerHTML = getData[i].date;
-      td3.innerHTML = getData[i].score;
+    // tr.classList.add("tr")
+    let th1 = document.createElement("th");
+    let th2 = document.createElement("th");
+    let th3 = document.createElement("th");
+    th1.classList.add("th");
+    th2.classList.add("th");
+    th3.classList.add("th");
+  
+    th1.innerHTML = "Name";
+    th2.innerHTML = "Date";
+    th3.innerHTML = "Score";
+    tr.append(th1, th2, th3);
+    thead.append(tr);
+    table.append(thead);
+  
+    let td1;
+    let td2;
+    let td3;
+  
+    for (let i = 0; i < getData.length; i++) {
+      
+      let tbody = document.createElement("tbody");
+      tbody.classList.add("tbody");
+      let tr = document.createElement("tr");
+      for (j = 0; j <= i; j++) {
+        td1 = document.createElement("td");
+        td2 = document.createElement("td");
+        td3 = document.createElement("td");
+  
+        td1.innerHTML = getData[i].name;
+        td2.innerHTML = getData[i].date;
+        td3.innerHTML = getData[i].score;
+      }
+      td1.classList.add("td");
+      td2.classList.add("td");
+      td3.classList.add("td");
+  
+      tr.append(td1, td2, td3);
+      tbody.append(tr);
+      table.append(tbody);
     }
-    td1.classList.add("td")
-    td2.classList.add("td")
-   td3.classList.add("td")
-
-    tr.append(td1, td2, td3);
-    tbody.append(tr)
-    table.append(tbody);
+  
+    maindiv.append(table);
+   
   }
-
-  maindiv.append(table);
+  else{
+    alert("plzz enter the text")
+  }
+  
 });
+let logo=document.querySelector("#logo")
+logo.addEventListener("click",()=>{
+        screen1.classList.remove("hide")
+        screen2.classList.add("hide")
+        screen3.classList.add("hide")
+        input.value=""
+})

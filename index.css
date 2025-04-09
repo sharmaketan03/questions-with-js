@@ -19,11 +19,13 @@ header{
     align-items: center;
     padding:15px 1rem;
     background-color: rgb(219, 26, 90);
+    position: fixed;
 }
 
 header p{
-    font-size:24px;
+    font-size:18px;
     color:white;
+    font-weight:500;
 }
 header  a{
     text-decoration: none;
@@ -74,7 +76,8 @@ header  a{
 .option{
     width:150px;
     margin:0.5rem;
-    background-color:blueviolet;
+    background-color:white;
+    color:black;
     padding:0.3rem;
     border-radius:5px;
 }
