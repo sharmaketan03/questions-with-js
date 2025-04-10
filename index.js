@@ -75,7 +75,7 @@ startquiz.addEventListener("click", (e) => {
     obj = {
       name: input.value,
       date: new Date().toLocaleString(),
-      score: 0,
+      score:0,
     };
     objlength = Object.keys(obj).length;
 
@@ -95,16 +95,16 @@ startquiz.addEventListener("click", (e) => {
 
           // questionnumber;
           randomorder[questionnumber];
-          setTimeout(() => {
-            // screen3.classList.add("hide");
-            // screen1.classList.remove("hide");
+          // setTimeout(() => {
+          //   // screen3.classList.add("hide");
+          //   // screen1.classList.remove("hide");
 
-            // console.log(randomorder[questionnumber])
+          //   // console.log(randomorder[questionnumber])
 
-            input.value = " ";
-            score = 0;
-            timer = 5;
-          }, 500);
+          //   input.value = " ";
+          //   score = 0;
+          //   timer = 5;
+          // }, 500);
         } else {
           timer = 5;
 
@@ -189,13 +189,14 @@ let maindivboard = document.querySelector(".lead");
 maindivboard.innerHTML = "";
 
 leaderboard.addEventListener("click", () => {
+  maindivboard.innerHTML = "";
+  screen1.classList.add("hide");
+  screen2.classList.add("hide");
+  document.querySelector(".screen3").style.display="none"
   if (input.value != "") {
-    maindivboard.innerHTML = "";
-    screen1.classList.add("hide");
-    screen2.classList.add("hide");
-    screen3.classList.add("hide");
+   
     maindivboard.style.display = "block";
-    screen1.style.display = "none";
+    // screen1.style.display = "none";
     let getData = JSON.parse(localStorage.getItem("localarr"));
     getData.sort(function (a, b) {
       return b.score - a.score;
@@ -250,6 +251,7 @@ leaderboard.addEventListener("click", () => {
     maindiv.append(table);
   } else {
     alert("plzz enter the text");
+    screen1.classList.remove("hide")
   }
 });
 let logo = document.querySelector("#logo");
