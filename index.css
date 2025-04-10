@@ -112,6 +112,7 @@ header  a{
     width: 80%;
     text-align: center;
     margin:auto;
+    border-spacing: 0px;
 }
 .thead,.tbody{
     margin:0.6rem 0;
@@ -121,4 +122,13 @@ header  a{
 .th,.td{
     border:1px solid black;
     border-collapse: collapse;
+}
+
+.green{
+    background-color: green;
+    color: #fff;
+}
+.red{
+    background-color: red;
+    color: #fff;
 }
